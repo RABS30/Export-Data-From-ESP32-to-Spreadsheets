@@ -10,15 +10,15 @@ function doGet(e) {
   // Jika ada parameter yang diterima.
   }else {                                              
     // ID dan Nama Sheet pada SpreadSheets 
-    var sheet_id = '1zIfF0ovee_ZHPpiXuEAUCohqgRghTu3cuzqKiy80MB0';  // ID Spreadsheet Google Sheets.
-    var sheet_name = "ESP32_Google_Sheets_Sheet";                   // Nama Sheet dalam Google Sheets.
+    var sheet_id = '...';       // ID Spreadsheet Google Sheets.
+    var sheet_name = "...";     // Nama Sheet dalam Google Sheets.
 
     // Buka SpreadSheets berdasarkan ID 
     var sheet_open = SpreadsheetApp.openById(sheet_id);
     // Mendapatkan Sheets berdasarkan nama di atas
     var sheet_target = sheet_open.getSheetByName(sheet_name);
 
-    // Membuat baris baru untuk data baru 
+    // Membuat baris baru seletah baris paling akhir untuk data baru 
     var newRow = sheet_target.getLastRow() + 1; // Menentukan baris baru untuk memasukkan data.
     
 
@@ -36,13 +36,13 @@ function doGet(e) {
 
     // Tanggal saat ini
     var Curr_Date = Utilities.formatDate(new Date(), "Asia/Jakarta", 'dd/MM/yyyy'); // Mendapatkan tanggal saat ini dalam format dd/MM/yyyy.
-    rowDataLog[0] = Curr_Date;  // Menyimpan tanggal dalam kolom A (untuk log data sensor DHT11).
-    Data_for_I3   = Curr_Date;    // Menyimpan tanggal dalam kolom I3 (untuk data sensor DHT11 terbaru).
+    rowDataLog[0] = Curr_Date;    // Menyimpan tanggal dalam kolom A (untuk log data).
+    Data_for_I3   = Curr_Date;    // Menyimpan tanggal dalam kolom I3 (untuk data terbaru).
 
     // Waktu saat ini
     var Curr_Time = Utilities.formatDate(new Date(), "Asia/Jakarta", 'HH:mm:ss'); // Mendapatkan waktu saat ini dalam format HH:mm:ss.
-    rowDataLog[1] = Curr_Time;  // Menyimpan waktu dalam kolom B (untuk log data sensor DHT11).
-    Data_for_J3 = Curr_Time;    // Menyimpan waktu dalam kolom J3 (untuk data sensor DHT11 terbaru).
+    rowDataLog[1] = Curr_Time;  // Menyimpan waktu dalam kolom B (untuk log data).
+    Data_for_J3 = Curr_Time;    // Menyimpan waktu dalam kolom J3 (untuk data terbaru).
 
     // Variable untuk menyimpan status
     var sts_val = ''; // Variabel untuk menyimpan status.
@@ -64,8 +64,8 @@ function doGet(e) {
           break;
 
         case 'temp':
-          rowDataLog[3] = value; // Menyimpan suhu dalam kolom D.
-          Data_for_L3 = value; // Menyimpan suhu dalam kolom L3.
+          rowDataLog[3] = value;  // Menyimpan suhu dalam kolom D.
+          Data_for_L3 = value;    // Menyimpan suhu dalam kolom L3.
           break;
 
         default:
@@ -75,12 +75,12 @@ function doGet(e) {
     
     // Kondisi untuk menulis data yang diterima dari ESP32 ke Google Sheets berdasarkan variable "sts_val"
     if (sts_val == 'write') {
-      // Data disimpan pada tabel Kiri
+      // Data disimpan pada tabel log data
       Logger.log(JSON.stringify(rowDataLog));                                       // Mencatat data log dalam format JSON.
       var newRangeDataLog = sheet_target.getRange(newRow, 1, 1, rowDataLog.length); // Mendapatkan range untuk baris baru.
       newRangeDataLog.setValues([rowDataLog]);                                      // Menulis data log ke Google Sheets.
       
-      // Data terakhir disimpan ke tabel kanan
+      // Data disimpan ke tabel data terbaru
       var RangeDataLatest = sheet_target.getRange('I3:O3');                         // Mendapatkan range untuk kolom I3 hingga O3.
       RangeDataLatest.setValues([[Data_for_I3, Data_for_J3, Data_for_K3, Data_for_L3, Data_for_M3, Data_for_N3, Data_for_O3]]); 
     
