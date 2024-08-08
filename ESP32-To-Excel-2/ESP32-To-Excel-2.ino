@@ -4,11 +4,11 @@
 
 
 // Wifi 
-const char* ssid = "HUAWEI-WJ3a";  
-const char* password = "kampungrindik"; 
+const char* ssid = "WiFi SSID";  
+const char* password = "password123"; 
 
 // URL SpreadSheets
-String Web_App_URL = "https://script.google.com/macros/s/AKfycbwS3gZP6HvusgxmshNQh5cshQ6vhib4NsmO93lh-w7akEJqWSL-6tc3DfpNX1BySTzmyg/exec";
+String Web_App_URL = "...";
 
 // Variable Sensor dan suhu
 String Status_Read_Sensor = "";
